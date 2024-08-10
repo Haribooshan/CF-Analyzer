@@ -1,0 +1,15 @@
+import requests
+
+methodName = "contest.status" 
+url = f"https://codeforces.com/api/{methodName}"
+
+payload = { "contestId" : 1995 , "handle" : ["haribooshan2003"]}
+
+submissions = requests.get(url,params=payload).json()["result"]
+
+for submission in submissions :
+    # print(submission,'\n')
+    print(submission['verdict'],submission['problem']['index'],submission['relativeTimeSeconds'],'\n')
+
+
+

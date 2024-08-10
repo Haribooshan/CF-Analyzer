@@ -1,0 +1,32 @@
+import requests
+
+class getInfoFromAPI():
+
+    def __init__(self,userName) :
+        self.userName = userName
+
+    def getSolveTimes(self,contestId):
+
+        methodName = "contest.standings" 
+        url = f"https://codeforces.com/api/{methodName}"
+
+        payload = { "contestId" : contestId , "handles" : [self.userName] }
+        response = requests.get(url,params=payload).json()["result"]
+
+        if(not response["rows"]) : return []
+
+        solveTimes = [ (x['bestSubmissionTimeSeconds'],x["points"]) for x in response["rows"][0]["problemResults"] if (x["points"]>0) ]
+        # solveTimes = response["rows"][0]["problemResults"]
+
+        return solveTimes
+
+
+var = getInfoFromAPI("haribooshan2003")
+var = var.getSolveTimes(1995)
+
+# print(var)
+
+for el in var :
+    print(el)
+
+
